@@ -1,23 +1,72 @@
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Grid from '@mui/material/Grid';
 
-function Movie({rnum,rank,movieImg,movieNm,openDt,audiAcc}) {
+function Movie({rnum,rank,movieImg,movieNm,openDt,audiAcc,movieCd}) {
     return (
-        <div key={rnum}>
-            <img src= {movieImg} width='250' height='300'/>
-            <Link to="/movie"><h2>{rank}. {movieNm}</h2></Link>
-            <p>개봉일 {openDt}</p>
-            <p>누적 관객수 {audiAcc}명</p>
-        </div>
+        <Grid
+            item
+            key={rnum}
+            xs={12}
+            sm={6}
+            md={4}
+        >
+        
+        <Link to={{ 
+            pathname : `/movie/${movieNm}`, state: {
+              rank:rank,
+              movieCd:movieCd,
+              openDt:openDt,
+              audiAcc:audiAcc
+            }
+        }}>
+        <Card>
+          <CardHeader
+            title={rank}
+            subheader={movieNm}
+            titleTypographyProps={{ align: 'left' }}
+            subheaderTypographyProps={{
+              align: 'center',
+            }}
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[200]
+                  : theme.palette.grey[700],
+            }}
+          />
+          <CardContent>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'baseline',
+                mb: 2,
+              }}
+            >
+            </Box>
+          </CardContent>
+          {/* <CardActions>
+            <Button fullWidth variant={tier.buttonVariant}>
+              {tier.buttonText}
+            </Button>
+          </CardActions> */}
+        </Card>
+        </Link>
+      </Grid>
     );
 }
 
-// eslint-disable-next-line react/no-typos
-Movie.PropTypes = {
+Movie.propTypes = {
     rnum: PropTypes.number.isRequired,
     rank : PropTypes.number.isRequired,
     movieImg : PropTypes.string.isRequired,
     movieNm : PropTypes.string.isRequired,
+    movieCd : PropTypes.string.isRequired,
     openDt : PropTypes.string.isRequired,
     audiAcc : PropTypes.number.isRequired,
 }
