@@ -18,6 +18,7 @@ const theme = createTheme();
 function Detail() {
     const [movie,setMovie] = useState({});
     const {id} = useParams();
+    const movieLink = movie.link;
     const getMovie = async () => {
         const {data} = await axios.get(
             `/v1/search/movie.json?query=${id}&display=1`,{
@@ -31,30 +32,31 @@ function Detail() {
     };
     useEffect(() => {
         getMovie();
-    },[]);
+    },id);
 
-
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      const data = new FormData(event.currentTarget);
-      console.log({
-        email: data.get('email'),
-        password: data.get('password'),
-      });
-    };
-  
     return (
       <ThemeProvider theme={theme}>
         <Grid container component="main" sx={{ height: '100vh' }}>
           <CssBaseline />
           <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
+          item
+          xs={12}
+          sm={6}
+          md={7}
           >
+             <Box noValidate sx={{ mt: 10 }}>
+                <Typography variant="h3" align="center" color="text.secondary">
+                 { movie.title?.replace(/<b>/gi,"").replace(/<\/b>/gi,"") }
+                </Typography>
+                <Typography variant="h5" align="center">{ movie.subtitle }</Typography>
+              </Box>
+              <Box noValidate sx={{ mt: 8 }}>
+                <Typography variant="h6" align="center">감독 : { movie.director?.replaceAll("|", "") }</Typography>
+                <Typography variant="h6" align="center">배우 : { movie.actor ? movie.actor?.replaceAll("|", " ") : "없음" }</Typography>
+                <Typography variant="h6" align="center"> 실관람 평점 : { movie.userRating }</Typography>
+              </Box>
         </Grid>
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Grid item xs={12} sm={8} md={5} elevation={6} square>
             <Box
               sx={{
                 my: 8,
@@ -72,12 +74,12 @@ function Detail() {
                 }}
                 alt={movie.title}
                 src={movie.image}
-            />
-              <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              />
+              <Box component="form" noValidate sx={{ mt: 1 }}>
                 <Grid container>
                   <Grid item xs>
                   <Stack spacing={2} direction="row">
-                    <Button variant="contained">예매</Button>
+                    <Button onClick={ () => window.open(movieLink)} variant="contained">더 알아보기..</Button>
                 </Stack>
                   </Grid>
                 </Grid>

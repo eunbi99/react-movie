@@ -5,8 +5,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
-function Movie({rnum,rank,movieImg,movieNm,openDt,audiAcc,movieCd}) {
+function Movie({rnum,rank,movieNm,openDt,audiAcc,movieCd}) {
     return (
         <Grid
             item
@@ -15,7 +16,6 @@ function Movie({rnum,rank,movieImg,movieNm,openDt,audiAcc,movieCd}) {
             sm={6}
             md={4}
         >
-        
         <Link to={{ 
             pathname : `/movie/${movieNm}`, state: {
               rank:rank,
@@ -30,7 +30,7 @@ function Movie({rnum,rank,movieImg,movieNm,openDt,audiAcc,movieCd}) {
             subheader={movieNm}
             titleTypographyProps={{ align: 'left' }}
             subheaderTypographyProps={{
-              align: 'center',
+            align: 'center',
             }}
             sx={{
               backgroundColor: (theme) =>
@@ -48,13 +48,11 @@ function Movie({rnum,rank,movieImg,movieNm,openDt,audiAcc,movieCd}) {
                 mb: 2,
               }}
             >
+              <Typography variant="p" align="center" color="text.secondary" component="p">
+                개봉일 : {openDt}
+              </Typography>
             </Box>
           </CardContent>
-          {/* <CardActions>
-            <Button fullWidth variant={tier.buttonVariant}>
-              {tier.buttonText}
-            </Button>
-          </CardActions> */}
         </Card>
         </Link>
       </Grid>
@@ -64,7 +62,6 @@ function Movie({rnum,rank,movieImg,movieNm,openDt,audiAcc,movieCd}) {
 Movie.propTypes = {
     rnum: PropTypes.number.isRequired,
     rank : PropTypes.number.isRequired,
-    movieImg : PropTypes.string.isRequired,
     movieNm : PropTypes.string.isRequired,
     movieCd : PropTypes.string.isRequired,
     openDt : PropTypes.string.isRequired,
